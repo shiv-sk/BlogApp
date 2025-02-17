@@ -1,16 +1,16 @@
 import mongoose , {Document , Types} from "mongoose"
 interface likeModel extends Document{
-    user:Types.ObjectId,
-    blog:Types.ObjectId,
+    userId:Types.ObjectId,
+    blogId:Types.ObjectId,
 }
 
 const likeSchema:mongoose.Schema<likeModel> = new mongoose.Schema({
-    user:{
+    userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true
     },
-    blog:{
+    blogId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Blog",
         required:true

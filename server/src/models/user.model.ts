@@ -11,7 +11,7 @@ interface userMethods{
     isPasswordCorrect(password: string):Promise<boolean>
 }
 
-interface userDocument extends userMethods , userModel , Document{}
+export interface userDocument extends userMethods , userModel , Document{}
 const userSchema:mongoose.Schema<userDocument> = new mongoose.Schema({
     name:{
         type:String,

@@ -22,4 +22,11 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(cors(corsOptions));
 
+//routers
+import userRoutes from "./routes/user.routes";
+app.use("/api/v1/user" , userRoutes);
+
+import blogRoutes from "./routes/blog.routes";
+app.use("/api/v1/blog" , blogRoutes);
+
 export default app;

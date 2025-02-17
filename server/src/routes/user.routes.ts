@@ -1,0 +1,10 @@
+import express, { Router } from "express";
+import { deleteUser, getCurrentUser, loginUser, logoutUser, registerUser, updateUser } from "../controllers/user.controller";
+import { loginSchema, regitserSchema, validateData } from "../utils/user.validation";
+const router:Router = express.Router();
+router.route("/register").post(validateData(regitserSchema) , registerUser);
+router.route("/login").post(validateData(loginSchema) , loginUser);
+router.route("/logout").get(logoutUser);
+router.route("/currentuser").get(getCurrentUser);
+router.route("/:userId").patch(updateUser).delete(deleteUser);
+export default router;
