@@ -1,81 +1,41 @@
+import { useEffect, useState } from "react";
+import { useBlog } from "../context/BlogContext"
+import { Link } from "react-router-dom";
+
 export default function Home(){
+    const [blogs , setBlogs] = useState([])
+    const {getAllBlogs , isLoading} = useBlog();
+    useEffect(()=>{
+        const fetchAllBlogs = async()=>{
+            const response = await getAllBlogs();
+            if(response){
+                setBlogs(response);
+            }
+        }
+        fetchAllBlogs();
+    } , []);
     return(
         <div className="flex flex-wrap gap-4 justify-center items-center ">
-            <div className="card bg-base-100 w-96 shadow-sm">
-                <figure className="px-10 pt-10">
-                    <img
-                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                    alt="Shoes"
-                    className="rounded-xl" />
-                </figure>
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title">Card Title</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div className="card-actions">
-                    <button className="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div className="card bg-base-100 w-96 shadow-sm">
-                <figure className="px-10 pt-10">
-                    <img
-                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                    alt="Shoes"
-                    className="rounded-xl" />
-                </figure>
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title">Card Title</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div className="card-actions">
-                    <button className="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div className="card bg-base-100 w-96 shadow-sm">
-                <figure className="px-10 pt-10">
-                    <img
-                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                    alt="Shoes"
-                    className="rounded-xl" />
-                </figure>
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title">Card Title</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div className="card-actions">
-                    <button className="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div className="card bg-base-100 w-96 shadow-sm">
-                <figure className="px-10 pt-10">
-                    <img
-                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                    alt="Shoes"
-                    className="rounded-xl" />
-                </figure>
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title">Card Title</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div className="card-actions">
-                    <button className="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-            <div className="card bg-base-100 w-96 shadow-sm">
-                <figure className="px-10 pt-10">
-                    <img
-                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                    alt="Shoes"
-                    className="rounded-xl" />
-                </figure>
-                <div className="card-body items-center text-center">
-                    <h2 className="card-title">Card Title</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div className="card-actions">
-                    <button className="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-            </div>
+            {
+                isLoading ? "loading...." :
+                blogs && blogs.length > 0 ? blogs.map((blog)=>(
+                        <div className="card bg-base-100 w-96 shadow-sm" key={blog._id}>
+                        <figure className="px-10 pt-10">
+                            <img
+                            src={blog?.coverImage || ""}
+                            alt="blogCoverImage"
+                            className="rounded-xl" />
+                        </figure>
+                        <div className="card-body items-center text-center">
+                            <h2 className="card-title">{blog?.title || ""}</h2>
+                            <p>{blog?.content || ""}</p>
+                            <div className="card-actions">
+                            <Link to={`blog/${blog._id}`}><button className="btn btn-primary">More</button></Link>
+                            </div>
+                        </div>
+                        </div>
+                )) : "there are no blogs!"
+            }
         </div>
     )
 }

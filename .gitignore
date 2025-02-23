@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # client file
-/client01
+/server/temp/media-uploads

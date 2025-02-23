@@ -7,6 +7,7 @@ import uploadToCloudinary from "../utils/cloudinary";
 //crud on blog
 const createBlog = asyncHandler(async(req , res)=>{
     const {title , content , author} = req.body;
+    console.log("the request body is! " , req.body);
     if(!(title && content && author) || !req.body){
         throw new ApiError(400 , "all fields are required!");
     }
@@ -40,6 +41,23 @@ const getBlogs = asyncHandler(async(req , res)=>{
     if(blogs.length === 0){
         res.status(404).json(
             new ApiResponse(404 , "blogs are not found!" , {})
+        )
+        return;
+    }
+    res.status(200).json(
+        new ApiResponse(200 , "blogs are! " , blogs)
+    )
+})
+
+const getUserBlogs = asyncHandler(async(req , res)=>{
+    const {userId} = req.params;
+    if(!userId){
+        throw new ApiError(400 , "userId is required!");
+    }
+    const blogs = await Blog.find({author:userId});
+    if(blogs.length === 0){
+        res.status(404).json(
+            new ApiResponse(404 , "no blogs for you! " , {})
         )
         return;
     }
@@ -107,4 +125,4 @@ const deleteBlog = asyncHandler(async(req , res)=>{
         new ApiResponse(200 , "blog is deleted successfully!" , deletedBlog)
     )
 })
-export {createBlog , getBlogs , getBlog , upDateBlog , deleteBlog}; 
+export {createBlog , getBlogs , getBlog , upDateBlog , deleteBlog , getUserBlogs}; 

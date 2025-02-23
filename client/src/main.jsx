@@ -9,6 +9,10 @@ import NewBlog from './pages/NewBlog.jsx';
 import BlogDetail from './pages/Blogdetail.jsx';
 import Login from './pages/Login.jsx';
 import Exp from './pages/Exp.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
+import MyBlogs from './pages/MyBlogs.jsx';
+import EditBlog from './pages/EditBlog.jsx';
+import { BlogProvider } from './context/BlogContext.jsx';
 const router = createBrowserRouter([
   {
     path:"/",
@@ -38,14 +42,26 @@ const router = createBrowserRouter([
         path:"exp",
         element:<Exp/>
       },
+      {
+        path:"myblogs",
+        element:<MyBlogs/>
+      },
+      {
+        path:"blog/edit/:blogId",
+        element:<EditBlog/>
+      },
     ]
   }
 ])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <AuthProvider>
+    <BlogProvider>
     <RouterProvider router={router}>
      <App/> 
     </RouterProvider>
+    </BlogProvider> 
+    </AuthProvider>
   </StrictMode>,
 )

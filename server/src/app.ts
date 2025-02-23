@@ -29,4 +29,10 @@ app.use("/api/v1/user" , userRoutes);
 import blogRoutes from "./routes/blog.routes";
 app.use("/api/v1/blog" , blogRoutes);
 
+import commentRoutes from "./routes/comment.routes";
+app.use("/api/v1/comment" , commentRoutes);
+
+import likeRoutes from "./routes/like.routes";
+app.use("/api/v1/like" , likeRoutes);
+
 export default app;
